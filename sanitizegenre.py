@@ -26,7 +26,10 @@ def run_command(cmd, exc=0):
     return False
 
 
-def fix_flac_tags(filename, genres=None):
+def fix_flac_tags(filename,
+                  genres=None,
+                  replay_gain='+5.500000 dB',
+                  isvarious=False):
 
     changed = False
 
@@ -59,53 +62,69 @@ def fix_flac_tags(filename, genres=None):
                 changed = True
     '''
 
-    if 'arious' in filename:
-        if 'ARTIST' not in flac_comment:
-            if '/' in flac_comment['TITLE'][0]:
-                print('Fix artist and title {}'.format(flac_comment['TITLE'][0]))
-                unpack = re.split('^(.*)/(.*)$', flac_comment['TITLE'][0], maxsplit=2)
-                flac_comment['ARTIST'].append(unpack[1].strip())
-                flac_comment['TITLE'][0] = unpack[2].strip()
-                logging.debug('Adding ARTIST Tag')
-                changed = True
-            elif '-' in flac_comment['TITLE'][0]:
-                print('Fix artist and title {}'.format(flac_comment['TITLE'][0]))
-                unpack = re.split('^(.*)-(.*)$', flac_comment['TITLE'][0], maxsplit=2)
-                flac_comment['ARTIST'].append(unpack[1].strip())
-                flac_comment['TITLE'][0] = unpack[2].strip()
-                logging.debug('Adding ARTIST Tag')
-                changed = True
-        elif 'Various' in flac_comment['ARTIST'][0]:
-            if '/' in flac_comment['TITLE'][0]:
-                print('Fix artist and title {}'.format(flac_comment['TITLE'][0]))
-                unpack = re.split('^(.*)/(.*)$', flac_comment['TITLE'][0], maxsplit=2)
-                flac_comment['ARTIST'][0] = unpack[1].strip()
-                flac_comment['TITLE'][0] = unpack[2].strip()
-                logging.debug('Fixing ARTIST and TITLE Tag')
-                changed = True
-            elif '-' in flac_comment['TITLE'][0]:
-                print('Fix artist and title {}'.format(flac_comment['TITLE'][0]))
-                unpack = re.split('^(.*)-(.*)$', flac_comment['TITLE'][0], maxsplit=2)
-                flac_comment['ARTIST'][0] = unpack[1].strip()
-                flac_comment['TITLE'][0] = unpack[2].strip()
-                logging.debug('Fixing ARTIST and TITLE Tag')
-                changed = True
+    try:
+
+        if isvarious or 'arious' in filename:
+            if 'ARTIST' not in flac_comment:
+                regex = None
+                if '/' in flac_comment['TITLE'][0]:
+                    regex = '^(.*)/(.*)$'
+                elif '-' in flac_comment['TITLE'][0]:
+                    regex = '^(.*)-(.*)$'
+                if regex:
+                    print('Fix artist and title {}'.format(flac_comment['TITLE'][0]))
+                    unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
+                    flac_comment['ARTIST'].append(unpack[1].strip())
+                    flac_comment['TITLE'][0] = unpack[2].strip()
+                    logging.debug('Adding ARTIST Tag')
+                    changed = True
+            elif 'arious' in flac_comment['ARTIST'][0]:
+                regex = None
+                if '/' in flac_comment['TITLE'][0]:
+                    regex = '^(.*)/(.*)$'
+                elif '-' in flac_comment['TITLE'][0]:
+                    regex = '^(.*)-(.*)$'
+                if regex:
+                    print('Fix artist and title {}'.format(flac_comment['TITLE'][0]))
+                    unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
+                    flac_comment['ARTIST'][0] = unpack[1].strip()
+                    flac_comment['TITLE'][0] = unpack[2].strip()
+                    logging.debug('Fixing ARTIST and TITLE Tag')
+                    changed = True
+            elif flac_comment['ARTIST'][0] in flac_comment['TITLE'][0]:
+                regex = None
+                # need to escape control characters (regex)
+                artist = re.escape(flac_comment['ARTIST'][0])
+                if '/' in flac_comment['TITLE'][0]:
+                    regex = '{}.*/(.*)$'.format(artist)
+                elif '-' in flac_comment['TITLE'][0]:
+                    regex = '{}.*-(.*)$'.format(artist)
+                if regex:
+                    print('Fix title {}'.format(flac_comment['TITLE'][0]))
+                    unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
+                    flac_comment['TITLE'][0] = unpack[1].strip()
+                    logging.debug('Fixing TITLE Tag')
+                    changed = True
+
+    except Exception:
+        print('boing!!!')
+        pass
 
     if 'REPLAYGAIN_TRACK_GAIN' in flac_comment:
         if flac_comment['REPLAYGAIN_TRACK_GAIN'][0] in ('+4.5', '+4.50', '+3.5', '+3.50'):
-            flac_comment['REPLAYGAIN_TRACK_GAIN'][0] = '+4.500000 dB'
+            flac_comment['REPLAYGAIN_TRACK_GAIN'][0] = replay_gain
             logging.debug('Fix REPLAYGAIN_TRACK_GAIN Tag')
             changed = True
         elif '0' == flac_comment['REPLAYGAIN_TRACK_GAIN'][0]:
             flac_comment.pop('REPLAYGAIN_TRACK_GAIN', None)
-            flac_comment['REPLAYGAIN_TRACK_GAIN'].append('+4.500000 dB')
+            flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
             logging.debug('Fix REPLAYGAIN_TRACK_GAIN Tag')
             changed = True
 
     if 'COMMENTS' in flac_comment:
         if 'NAD' in flac_comment['COMMENTS'][0]:
             if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
-                flac_comment['REPLAYGAIN_TRACK_GAIN'].append('+4.500000 dB')
+                flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
                 logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
                 changed = True
 
@@ -142,7 +161,7 @@ def fix_flac_tags(filename, genres=None):
 
         if tf.exists():
             # metaflac command line
-            cmd = 'metaflac --no-utf8-convert'
+            cmd = 'metaflac --preserve-modtime --no-utf8-convert'
             cmd += ' --remove-all-tags'
             cmd += ' --import-tags-from={} "{}"'.format(tags_file, filename)
             run_command(cmd, 1)
@@ -163,7 +182,8 @@ def main(args):
     pathlist = Path(args.folder).glob('*/*.flac')
     for path in sorted(pathlist):
         fix_flac_tags(str(path),
-                      genres=genres)
+                      genres=genres,
+                      isvarious=args.various)
 
 
 log_file = '/tmp/sanitrizeflactag.log'
@@ -175,6 +195,10 @@ parser.add_argument('--folder', '-f',
 parser.add_argument('--genre', '-g',
                     help='Genre Data',
                     type=str)
+parser.add_argument('--various', '-v',
+                    help='Various Artists',
+                    type=bool,
+                    default=False)
 parser.add_argument('--backup', '-b',
                     help='Backup original files',
                     type=int,
