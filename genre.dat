@@ -2,12 +2,18 @@
 # we should only need to include the exceptions, but
 # for coverage a full list is developed here
 # for safety values pass-thru if not defined here
+Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychede|Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychedelic Rock
+Psychede|Psychedelic Rock
+Avant-Funk|Avant-Funk
+Folk Rock:Modern Classical|Folk Rock;Modern Classical
+Progressive|Progressive
 .|Rock
 2011|Electronic
 6 Mix|6 Mix;Electronic
 6 Music|6 Music;Electronic
 ???|Electronic
 A|Rock
+Hard-Bop|Hard-Bop
 A Cappella|A cappella
 Abstarct|Abstract
 Abstract|Abstract
