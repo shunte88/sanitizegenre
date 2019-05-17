@@ -159,7 +159,7 @@ Brit Pop|Britpop
 Brit-Pop|Britpop
 Brit-pop|Britpop
 Brit Pop Rock|Britpop;Rock
-Brit Pop, Synth-Pop|Britpop;Synth-pop;Synthpop;Pop
+Brit Pop, Synth-Pop|Britpop;Synth-pop;Pop
 Brit Rock|Britpop;Rock
 BritPop|Britpop
 Britpop|Britpop
@@ -281,7 +281,7 @@ Downbeat|Downbeat
 Downbeat Electronic|Downbeat;Electronic
 Downtempo|Downtempo
 Downtempo, Tribal, New Age|Downtempo;Tribal;New Age
-DowntempoSynth-pop|Downtempo;Synth-pop;Synthpop
+DowntempoSynth-pop|Downtempo;Synth-pop
 Drag|Drag
 Drama|Drama
 Drawbar Organ Electronic Bass Music|Drawbar Organ;Electronic;Bass Music
@@ -336,7 +336,7 @@ Electro House|Electro House
 Electro-Pop|Electro-Pop;Electropop
 Electro Rock|Electro Rock
 Electro Swing|Electro Swing
-Electro  Synthpop|Electro;Synthpop;Synth-pop
+Electro  Synthpop|Electro;Synth-pop
 Electro, Techno|Electro;Techno
 Electro-Techno|Electro;Techno
 Electro-World|Electro;World
@@ -349,7 +349,7 @@ Electronic|Electronic
 Electronic/|Electronic
 ELECTRONIC|Electronic
 Electronic*|Electronic
-Electronic : Abstract, Downtempo, Synth-Pop|Electronic;Abstract;Downtempo;Synth-pop;Synthpop
+Electronic : Abstract, Downtempo, Synth-Pop|Electronic;Abstract;Downtempo;Synth-pop
 Electronic\; Abstract; Drone; Ambient|Electronic;Abstract;Drone;Ambient
 Electronic; Abstract; Drone; Ambient|Electronic;Abstract;Drone;Ambient
 Electronic\; Abstract; Experimental|Electronic;Abstract;Experimental
@@ -362,8 +362,8 @@ Electronic; Ambient|Electronic;Ambient
 Electronic\;Ambient|Electronic;Ambient
 Electronic;Ambient|Electronic;Ambient
 Electronic, Ambient|Electronic;Ambient
-Electronic\;Ambient;Electro;Synth-pop|Electronic;Ambient;Electro;Synth-pop;Synthpop
-Electronic;Ambient;Electro;Synth-pop|Electronic;Ambient;Electro;Synth-pop;Synthpop
+Electronic\;Ambient;Electro;Synth-pop|Electronic;Ambient;Electro;Synth-pop
+Electronic;Ambient;Electro;Synth-pop|Electronic;Ambient;Electro;Synth-pop
 Electronic\;Ambient;Experimental|Electronic;Ambient;Experimental
 Electronic;Ambient;Experimental|Electronic;Ambient;Experimental
 Electronic\; Ambient; Experimental|Electronic;Ambient;Experimental
@@ -382,8 +382,8 @@ Electronic\; Dub; Electro; Reggae; Industrial; Experimental;|Electronic;Dub;Elec
 Electronic; Dub; Electro; Reggae; Industrial; Experimental;|Electronic;Dub;Electro;Reggae;Industrial;Experimental
 Electronic\; Dub; Electro; Reggae; Industrial; Experimental|Electronic;Dub;Electro;Reggae;Industrial;Experimental
 Electronic; Dub; Electro; Reggae; Industrial; Experimental|Electronic;Dub;Electro;Reggae;Industrial;Experimental
-Electronic\;Electro;Synth-pop|Electronic;Electro;Synth-pop;Synthpop
-Electronic;Electro;Synth-pop|Electronic;Electro;Synth-pop;Synthpop
+Electronic\;Electro;Synth-pop|Electronic;Electro;Synth-pop
+Electronic;Electro;Synth-pop|Electronic;Electro;Synth-pop
 Electronic/Electronic|Electronic
 Electronic\; Electronica; Dance; Big Beat|Electronic;Electronica;Dance;Big Beat
 Electronic; Electronica; Dance; Big Beat|Electronic;Electronica;Dance;Big Beat
@@ -406,10 +406,10 @@ Electronic\; Jazz; Dubstep; Future Jazz|Electronic;Jazz;Dubstep;Future Jazz
 Electronic; Jazz; Dubstep; Future Jazz|Electronic;Jazz;Dubstep;Future Jazz
 Electronic\; New Age; Ambient|Electronic;New Age;Ambient
 Electronic; New Age; Ambient|Electronic;New Age;Ambient
-Electronic\;Non-Music;Stage & Screen;Soundtrack;Dialogue;Abstract;Synth-pop;Ambient|Electronic;Non-Music;Stage & Screen;Soundtrack;Dialogue;Abstract;Synth-pop;Synthpop;Ambient
-Electronic;Non-Music;Stage & Screen;Soundtrack;Dialogue;Abstract;Synth-pop;Ambient|Electronic;Non-Music;Stage & Screen;Soundtrack;Dialogue;Abstract;Synth-pop;Synthpop;Ambient
-Electronic Pop|Electronic;Pop;Synth-pop;Synthpop
-Electronic, Pop : Synth-pop|Electronic;Pop;Synth-pop;Synthpop
+Electronic\;Non-Music;Stage & Screen;Soundtrack;Dialogue;Abstract;Synth-pop;Ambient|Electronic;Non-Music;Stage & Screen;Soundtrack;Dialogue;Abstract;Synth-pop;Ambient
+Electronic;Non-Music;Stage & Screen;Soundtrack;Dialogue;Abstract;Synth-pop;Ambient|Electronic;Non-Music;Stage & Screen;Soundtrack;Dialogue;Abstract;Synth-pop;Ambient
+Electronic Pop|Electronic;Pop;Synth-pop
+Electronic, Pop : Synth-pop|Electronic;Pop;Synth-pop
 Electronic\;Power Electronics;Noise;Ambient;Industrial|Electronic;Power Electronics;Noise;Ambient;Industrial
 Electronic;Power Electronics;Noise;Ambient;Industrial|Electronic;Power Electronics;Noise;Ambient;Industrial
 Electronic\;Roc;Prog Rock;Art Rock;Progressive Rock;Indie Rock|Electronic;Roc;Prog Rock;Art Rock;Progressive Rock;Indie Rock
@@ -427,12 +427,12 @@ Electronic;Rock;Pop;Psychedelic Rock;Power Pop;Indie Pop;Garage Rock|Electronic;
 Electronic\;Rock;Pop;Psychedelic Rock;Power Pop;Indie Pop;Garage Rock;|Electronic;Rock;Pop;Psychedelic Rock;Power Pop;Indie Pop;Garage Rock
 Electronic;Rock;Pop;Psychedelic Rock;Power Pop;Indie Pop;Garage Rock;|Electronic;Rock;Pop;Psychedelic Rock;Power Pop;Indie Pop;Garage Rock
 Electronic - Sound Collage - Music Concrete - Ambient - Dark Ambient - Dementia - Memories - Ambien|Electronic;Sound Collage;Music Concrete;Ambient;Dark Ambient;Dementia;Memories;Ambien
-Electronic\;Synth-pop|Electronic;Synth-pop;Synthpop
-Electronic;Synth-pop|Electronic;Synth-pop;Synthpop
-Electronic\;Synth=pop|Electronic;Synth-pop;Synthpop
-Electronic;Synth=pop|Electronic;Synth-pop;Synthpop
-Electronic\;Synthie-Pop|Electronic;Synth-pop;Synthpop
-Electronic;Synthie-Pop|Electronic;Synth-pop;Synthpop
+Electronic\;Synth-pop|Electronic;Synth-pop
+Electronic;Synth-pop|Electronic;Synth-pop
+Electronic\;Synth=pop|Electronic;Synth-pop
+Electronic;Synth=pop|Electronic;Synth-pop
+Electronic\;Synthie-Pop|Electronic;Synth-pop
+Electronic;Synthie-Pop|Electronic;Synth-pop
 Electronic - Techno - Industrial|Electronic;Techno;Industrial
 Electronic\; Techno; Tech House; Deep House|Electronic;Techno;Tech House;Deep House
 Electronic; Techno; Tech House; Deep House|Electronic;Techno;Tech House;Deep House
@@ -783,7 +783,7 @@ New Wave|New Wave
 New-Wave|New Wave
 New Wave/|New Wave
 New Wave / New Romantic|New Wave;New Romantic
-New Wave; Synth-pop|New Wave;Synth-pop;Synthpop
+New Wave; Synth-pop|New Wave;Synth-pop
 New Wave/New Wave|New Wave
 Newage|New Age
 No Genre|Electronic
@@ -1038,11 +1038,11 @@ Spoken Twaddle|Spoken Twaddle
 Spoken Word|Spoken Word
 Srum n Bass|Drum n Bass
 Ssslllooowww|Ssslllooowww
+Stage & ScreenSoundtrack|Soundtrack;Stage & Screen;Score
 Stage And Screen|Soundtrack;Stage & Screen;Score
 Stage and Screen|Soundtrack;Stage & Screen;Score
 Stage & Screen|Soundtrack;Stage & Screen;Score
 Stage & SCreen|Soundtrack;Stage & Screen;Score
-Stage & ScreenSoundtrack|Soundtrack;Stage & Screen;Score
 Standup Shaggggg|Standup Shaggggg
 Stoner Rock|Stoner Rock
 Sub|Dub
@@ -1051,22 +1051,22 @@ Swans|Swans
 Swing|Swing
 Symphonic Rock|Symphonic Rock
 Synth|Synth
-Synth-pop|Synth-pop;Synthpop
-Synth-Pop|Synth-pop;Synthpop
-Synth Pop|Synth-pop;Synthpop
-Synth-pop, New Wave, Pop|Synth-pop;Synthpop;New Wave;Pop
+Synth-pop|Synth-pop
+Synth-Pop|Synth-pop
+Synth Pop|Synth-pop
+Synth-pop, New Wave, Pop|Synth-pop;New Wave;Pop
 Synth-wave|Synth-wave;Synthwave
-Synthie-Pop|Synth-pop;Synthpop
-Synthiepop|Synth-pop;Synthpop
-Synthpop|Synth-pop;Synthpop
-SynthPop|Synth-pop;Synthpop
-SynthPop/Synthpop|Synth-pop;Synthpop
-SynthPop/synthpop|Synth-pop;Synthpop
+Synthie-Pop|Synth-pop
+Synthiepop|Synth-pop
+Synthpop|Synth-pop
+SynthPop|Synth-pop
+SynthPop/Synthpop|Synth-pop
+SynthPop/synthpop|Synth-pop
 Synthpunk|Synth-punk;Punk
 Synthwave|Synth-wave;Synthwave
 SYNTHWAVE / ELECTRO|Synth-wave;Synthwave;Electro;Electronic
-Syth-pop|Synth-pop;Synthpop
-Syth-Pop|Synth-pop;Synthpop
+Syth-pop|Synth-pop
+Syth-Pop|Synth-pop
 Tech House|Tech House
 Tech Nouse|Tech House
 Techno|Techno
@@ -1099,7 +1099,7 @@ Tribal House|Tribal House
 Tribute|Tribute
 Trip Hop|Trip Hop;Trip-Hop
 Trip-Hop|Trip Hop;Trip-Hop
-Trip HopSynth-pop|Trip Hop;Trip-Hop;Synth-pop;Synthpop
+Trip HopSynth-pop|Trip Hop;Trip-Hop;Synth-pop
 Tropical House|Tropical House
 Turntablism|Turntablism;DJ
 Twee Pop|Twee Pop

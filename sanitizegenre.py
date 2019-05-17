@@ -144,7 +144,7 @@ def fix_flac_tags(filename,
                     changed = True
 
     # fix alphabetized stoopids
-    regex = '^(.*), (El|La|Le|Die|Der|Das|The)$'
+    regex = '^(.*), (Das|Der|Die|El|La|Las|Le|Les|Los|The)$'
     try:
         for test_tag in ('ARTIST', 'ALBUMARTIST', 'ALBUM ARTIST'):
             if test_tag in flac_comment:
