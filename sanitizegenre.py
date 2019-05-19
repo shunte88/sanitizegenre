@@ -48,9 +48,14 @@ def fix_flac_tags(filename,
     # the genre and use rather than reworking over and over
     flac_comment, changed = metaflac.get_sanitized_vorbis_comment()
 
+    if 0 == isvarious:
+        if 'COMPILATION' in flac_comment:
+            if 'Y' == flac_comment['COMPILATION'][0]:
+                isvarious = 1
+
     for test_tag in ('ALBUMARTIST', 'ALBUM ARTIST'):
         if test_tag in flac_comment:
-            if 'Various' in flac_comment[test_tag][0]:
+            if 'Various' in flac_comment[test_tag][0] or 1 == isvarious:
                 if 'Various Production' not in flac_comment[test_tag][0]:
                     flac_comment.pop(test_tag, None)
                     logging.debug('Delete {} Tag'.format(test_tag))
