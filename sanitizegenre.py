@@ -10,6 +10,15 @@ from pathlib import Path
 from metaflac import MetaFlac
 import csv
 import re
+import contextlib
+
+
+@contextlib.contextmanager
+def ignored(*exceptions):
+    try:
+        yield
+    except exceptions:
+        pass
 
 
 def run_command(cmd, exc=0):
@@ -49,9 +58,8 @@ def fix_flac_tags(filename,
     flac_comment, changed = metaflac.get_sanitized_vorbis_comment()
 
     if 0 == isvarious:
-        if 'COMPILATION' in flac_comment:
-            if 'Y' == flac_comment['COMPILATION'][0]:
-                isvarious = 1
+        with ignored(KeyError, IndexError):
+            isvarious = int('Y' == flac_comment['COMPILATION'][0])
 
     for test_tag in ('ALBUMARTIST', 'ALBUM ARTIST'):
         if test_tag in flac_comment:
@@ -134,6 +142,21 @@ def fix_flac_tags(filename,
     except Exception:
         pass
 
+    # fix disktotal, disknumber tag typo
+
+    for test_tag in ('DISKNUMBER', 'DISKTOTAL'):
+        if test_tag in flac_comment:
+            new_tag = test_tag.replace('K', 'C')
+            if new_tag not in flac_comment:
+                value = '01'
+                with ignored(KeyError, ValueError):
+                    value = str(int(flac_comment[test_tag][0])).zfill(2)
+                flac_comment[new_tag].append(value)
+                logging.debug('Adding {} Tag'.format(new_tag))
+            logging.debug('Cleanup {} Tag'.format(test_tag))
+            flac_comment.pop(test_tag, None)
+            changed = True
+
     if (discnumber+disctotal+tracktotal) > 0:
         for test_tag in ('DISCNUMBER', 'DISCTOTAL', 'TRACKTOTAL'):
             if test_tag not in flac_comment:
@@ -150,18 +173,16 @@ def fix_flac_tags(filename,
 
     # fix alphabetized stoopids
     regex = '^(.*), (Das|Der|Die|El|La|Las|Le|Les|Los|The)$'
-    try:
-        for test_tag in ('ARTIST', 'ALBUMARTIST', 'ALBUM ARTIST'):
-            if test_tag in flac_comment:
-                for i in range(len(flac_comment[test_tag])):
-                    m = re.search(regex, flac_comment[test_tag][i])
-                    if m:
-                        flac_comment[test_tag][i] = '{} {}'.format(m.group(2),
-                                                                   m.group(1))
-                        logging.debug('Fixing {} Tag'.format(test_tag))
-                        changed = True
-    except Exception:
-        pass
+
+    for test_tag in ('ARTIST', 'ALBUMARTIST', 'ALBUM ARTIST'):
+        if test_tag in flac_comment:
+            for i, value in enumerate(flac_comment[test_tag]):
+                m = re.search(regex, value)
+                if m:
+                    flac_comment[test_tag][i] = '{} {}'.format(m.group(2),
+                                                               m.group(1))
+                    logging.debug('Fixing {} Tag'.format(test_tag))
+                    changed = True
 
     if 'REPLAYGAIN_TRACK_GAIN' in flac_comment:
         if flac_comment['REPLAYGAIN_TRACK_GAIN'][0] in ('+4.5', '+4.50', '+3.5', '+3.50'):
@@ -174,7 +195,7 @@ def fix_flac_tags(filename,
             logging.debug('Fix REPLAYGAIN_TRACK_GAIN Tag')
             changed = True
 
-    if 'COMMENTS' in flac_comment:
+    with ignored(KeyError, IndexError):
         if 'NAD' in flac_comment['COMMENTS'][0]:
             if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
                 flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
