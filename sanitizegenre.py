@@ -37,7 +37,7 @@ def run_command(cmd, exc=0):
 
 def fix_flac_tags(filename,
                   genres=None,
-                  replay_gain='+5.500000 dB',
+                  replay_gain='+8.500000 dB',
                   isvarious=False,
                   discnumber=0,
                   disctotal=0,
@@ -50,7 +50,7 @@ def fix_flac_tags(filename,
     try:
         metaflac = MetaFlac(filename, genres)
     except:
-        logging.error('Exception on {}'.format(filename))
+        logging.error(f'Exception on {filename}')
         return
 
     # for each album processed we should be able to "cache"
@@ -66,30 +66,20 @@ def fix_flac_tags(filename,
             if 'Various' in flac_comment[test_tag][0] or 1 == isvarious:
                 if 'Various Production' not in flac_comment[test_tag][0]:
                     flac_comment.pop(test_tag, None)
-                    logging.debug('Delete {} Tag'.format(test_tag))
+                    logging.debug(f'Delete {test_tag} Tag')
                     changed = True
-
-    # patch for missing year - very noisey!!!
-    '''
-    if 'YEAR' not in flac_comment:
-        if 'DATE' in flac_comment:
-            for year in flac_comment['DATE']:
-                flac_comment['YEAR'].append(year)
-                logging.debug('Adding YEAR Tag')
-                changed = True
-    '''
 
     try:
 
-        if isvarious or 'arious' in filename:
+        if 1 == isvarious or 'arious' in filename:
             if 'ARTIST' not in flac_comment:
                 regex = None
                 if '/' in flac_comment['TITLE'][0]:
-                    regex = '^(.*)/(.*)$'
+                    regex = r'^(.*)/(.*)$'
                 elif '-' in flac_comment['TITLE'][0]:
-                    regex = '^(.*)-(.*)$'
+                    regex = r'^(.*)-(.*)$'
                 if regex:
-                    print('Fix artist and title {}'.format(flac_comment['TITLE'][0]))
+                    print(f"Fix artist and title {flac_comment['TITLE'][0]}")
                     unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
                     artist = unpack[1].strip()
                     title = unpack[2].strip()
@@ -103,14 +93,15 @@ def fix_flac_tags(filename,
                     flac_comment['TITLE'][0] = title
                     logging.debug('Adding ARTIST Tag')
                     changed = True
+
             elif 'arious' in flac_comment['ARTIST'][0]:
                 regex = None
                 if '/' in flac_comment['TITLE'][0]:
-                    regex = '^(.*)/(.*)$'
+                    regex = r'^(.*)/(.*)$'
                 elif '-' in flac_comment['TITLE'][0]:
-                    regex = '^(.*)-(.*)$'
+                    regex = r'^(.*)-(.*)$'
                 if regex:
-                    print('Fix artist and title {}'.format(flac_comment['TITLE'][0]))
+                    print(f"Fix artist and title {flac_comment['TITLE'][0]}")
                     unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
                     artist = unpack[1].strip()
                     title = unpack[2].strip()
@@ -129,11 +120,11 @@ def fix_flac_tags(filename,
                 # need to escape control characters (regex)
                 artist = re.escape(flac_comment['ARTIST'][0])
                 if '/' in flac_comment['TITLE'][0]:
-                    regex = '{}.*/(.*)$'.format(artist)
+                    regex = f'{artist}.*/(.*)$'
                 elif '-' in flac_comment['TITLE'][0]:
-                    regex = '{}.*-(.*)$'.format(artist)
+                    regex = f'{artist}.*-(.*)$'
                 if regex:
-                    print('Fix title {}'.format(flac_comment['TITLE'][0]))
+                    print(f"Fix title {flac_comment['TITLE'][0]}")
                     unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
                     flac_comment['TITLE'][0] = unpack[1].strip()
                     logging.debug('Fixing TITLE Tag')
@@ -152,8 +143,8 @@ def fix_flac_tags(filename,
                 with ignored(KeyError, ValueError):
                     value = str(int(flac_comment[test_tag][0])).zfill(2)
                 flac_comment[new_tag].append(value)
-                logging.debug('Adding {} Tag'.format(new_tag))
-            logging.debug('Cleanup {} Tag'.format(test_tag))
+                logging.debug(f'Adding {new_tag} Tag')
+            logging.debug(f'Cleanup {test_tag} Tag')
             flac_comment.pop(test_tag, None)
             changed = True
 
@@ -168,20 +159,19 @@ def fix_flac_tags(filename,
                     value = tracktotal
                 if value > 0:
                     flac_comment[test_tag].append(value)
-                    logging.debug('Adding {} Tag'.format(test_tag))
+                    logging.debug(f'Adding {test_tag} Tag')
                     changed = True
 
     # fix alphabetized stoopids
-    regex = '^(.*), (Das|Der|Die|El|La|Las|Le|Les|Los|The)$'
+    regex = r'^(.*), (Das|Der|Die|El|La|Las|Le|Les|Los|The)$'
 
     for test_tag in ('ARTIST', 'ALBUMARTIST', 'ALBUM ARTIST'):
         if test_tag in flac_comment:
             for i, value in enumerate(flac_comment[test_tag]):
-                m = re.search(regex, value)
+                m = re.search(regex, value, re.IGNORECASE)
                 if m:
-                    flac_comment[test_tag][i] = '{} {}'.format(m.group(2),
-                                                               m.group(1))
-                    logging.debug('Fixing {} Tag'.format(test_tag))
+                    flac_comment[test_tag][i] = f'{m.group(2).capitalize()} {m.group(1)}'
+                    logging.debug(f'Fixing {test_tag} Tag')
                     changed = True
 
     if 'REPLAYGAIN_TRACK_GAIN' in flac_comment:
@@ -212,8 +202,15 @@ def fix_flac_tags(filename,
                       'GROUPING'):
         if redundant in flac_comment:
             flac_comment.pop(redundant, None)
-            logging.debug('Delete {} Tag'.format(redundant))
+            logging.debug(f'Delete {redundant} Tag')
             changed = True
+
+    for fix_tag in ('DATE', 'YEAR'):
+        if fix_tag in flac_comment:
+            if len(flac_comment[fix_tag]) > 1:
+                flac_comment[fix_tag] = flac_comment[fix_tag][:1]
+                logging.debug(f'Cleanup {fix_tag} Tag')
+                changed = True
 
     if changed:
         tags_file = '%d.tag' % (os.getpid())
@@ -222,14 +219,14 @@ def fix_flac_tags(filename,
         if tf.exists():
             tf.unlink()
 
-        logging.info('Rewrite FLAC tags on "{}"'.format(filename))
+        logging.info(f'Rewrite FLAC tags on "{filename}"')
         text = ''
         for k, v in sorted(flac_comment.items()):
             # dedupe
             if len(v) > 1:
                 v = list(set(v))
             for vv in v:
-                text += "{}={}\n".format(k, vv)
+                text += f"{k}={vv}\n"
         tf.write_text(text)
         print(text)
 
@@ -237,7 +234,7 @@ def fix_flac_tags(filename,
             # metaflac command line
             cmd = 'metaflac --preserve-modtime --no-utf8-convert'
             cmd += ' --remove-all-tags'
-            cmd += ' --import-tags-from={} "{}"'.format(tags_file, filename)
+            cmd += f' --import-tags-from={tags_file} "{filename}"'
             run_command(cmd, 1)
             # cleanup
             tf.unlink()
