@@ -80,7 +80,9 @@ def fix_flac_tags(filename,
                     regex = r'^(.*)-(.*)$'
                 if regex:
                     print(f"Fix artist and title {flac_comment['TITLE'][0]}")
-                    unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
+                    unpack = re.split(regex,
+                                      flac_comment['TITLE'][0],
+                                      maxsplit=2)
                     artist = unpack[1].strip()
                     title = unpack[2].strip()
                     if len(artist) < 3:
@@ -102,7 +104,9 @@ def fix_flac_tags(filename,
                     regex = r'^(.*)-(.*)$'
                 if regex:
                     print(f"Fix artist and title {flac_comment['TITLE'][0]}")
-                    unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
+                    unpack = re.split(regex,
+                                      flac_comment['TITLE'][0],
+                                      maxsplit=2)
                     artist = unpack[1].strip()
                     title = unpack[2].strip()
                     if len(artist) < 3:
@@ -125,7 +129,9 @@ def fix_flac_tags(filename,
                     regex = f'{artist}.*-(.*)$'
                 if regex:
                     print(f"Fix title {flac_comment['TITLE'][0]}")
-                    unpack = re.split(regex, flac_comment['TITLE'][0], maxsplit=2)
+                    unpack = re.split(regex,
+                                      flac_comment['TITLE'][0],
+                                      maxsplit=2)
                     flac_comment['TITLE'][0] = unpack[1].strip()
                     logging.debug('Fixing TITLE Tag')
                     changed = True
@@ -175,7 +181,10 @@ def fix_flac_tags(filename,
                     changed = True
 
     if 'REPLAYGAIN_TRACK_GAIN' in flac_comment:
-        if flac_comment['REPLAYGAIN_TRACK_GAIN'][0] in ('+4.5', '+4.50', '+3.5', '+3.50'):
+        if flac_comment['REPLAYGAIN_TRACK_GAIN'][0] in ('+4.5',
+                                                        '+4.50',
+                                                        '+3.5',
+                                                        '+3.50'):
             flac_comment['REPLAYGAIN_TRACK_GAIN'][0] = replay_gain
             logging.debug('Fix REPLAYGAIN_TRACK_GAIN Tag')
             changed = True
