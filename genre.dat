@@ -2,6 +2,8 @@
 # we should only need to include the exceptions, but
 # for coverage a full list is developed here
 # for safety values pass-thru if not defined here
+Non-music|Non-music
+AcousticElectronic|Acoustic;Electronic
 Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychede|Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychedelic Rock
 Psychede|Psychedelic Rock
 Avant-Funk|Avant-Funk
@@ -140,6 +142,7 @@ Blizzard-Wave|Blizzard-Wave
 Bluegrass|Bluegrass
 Blues|Blues
 Opera|Opera
+ndie Rock|Indie Rock
 Romanticism|Romanticism
 Blues Rock|Blues Rock
 Blues-Rock|Blues Rock
