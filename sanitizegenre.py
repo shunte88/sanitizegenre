@@ -5,6 +5,7 @@ import sys
 import argparse
 import logging
 import subprocess
+import datetime
 import glob
 from pathlib import Path
 from metaflac import MetaFlac
@@ -44,7 +45,7 @@ def fix_flac_tags(filename,
                   tracktotal=0):
 
     changed = False
-
+    today = datetime.date.today()
     metflac = None
 
     try:
@@ -214,6 +215,16 @@ def fix_flac_tags(filename,
             logging.debug(f'Delete {redundant} Tag')
             changed = True
 
+    # add signature if not present
+    if 'COMMENT' not in flac_comment:
+        flac_comment['COMMENT'].append(f'FixFlac {today}')
+        logging.debug('Adding COMMENT Tag')
+        changed = True
+    else:
+        if "\n" in flac_comment['COMMENT']:
+            logging.debug('Fix multi-line COMMENT Tag')
+            changed = True
+
     for fix_tag in ('DATE', 'YEAR'):
         if fix_tag in flac_comment:
             if len(flac_comment[fix_tag]) > 1:
@@ -235,6 +246,10 @@ def fix_flac_tags(filename,
             if len(v) > 1:
                 v = list(set(v))
             for vv in v:
+                if "\n" in vv:
+                    vv = vv.replace('\r\n', ' ')
+                    vv = vv.replace('\n', ' ')
+                    vv = vv.replace('\r', ' ')
                 text += f"{k}={vv}\n"
         tf.write_text(text)
         print(text)
