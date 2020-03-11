@@ -45,6 +45,9 @@ def fix_flac_tags(filename,
                   tracktotal=0):
 
     changed = False
+    vinyl_rip = '24bVR'
+    bad_vinyl_tag = '24Vbr'
+
     today = datetime.date.today()
     metflac = None
 
@@ -56,11 +59,16 @@ def fix_flac_tags(filename,
 
     # for each album processed we should be able to "cache"
     # the genre and use rather than reworking over and over
-    flac_comment, changed = metaflac.get_sanitized_vorbis_comment()
+    flac_comment, changed, ID3_tags = metaflac.get_sanitized_vorbis_comment()
+
+    if ID3_tags:
+        changed = True
 
     if 0 == isvarious:
         with ignored(KeyError, IndexError):
-            isvarious = int('Y' == flac_comment['COMPILATION'][0])
+            isvarious = ( \
+                (int('Y' == flac_comment['COMPILATION'][0])) or \
+                (int('1' == flac_comment['COMPILATION'][0])))
 
     for test_tag in ('ALBUMARTIST', 'ALBUM ARTIST'):
         if test_tag in flac_comment:
@@ -140,6 +148,13 @@ def fix_flac_tags(filename,
     except Exception:
         pass
 
+
+    if 'PERFORMER' not in flac_comment:
+        if 'ARTIST' in flac_comment:
+            flac_comment['PERFORMER'].append(flac_comment['ARTIST'][0])
+            logging.debug('Adding PERFORMER Tag')
+            changed = True
+
     # fix disktotal, disknumber tag typo
 
     for test_tag in ('DISKNUMBER', 'DISKTOTAL'):
@@ -196,11 +211,24 @@ def fix_flac_tags(filename,
             changed = True
 
     with ignored(KeyError, IndexError):
+        for fixem in ('ALBUM','TITLE'):
+            if fixem in flac_comment:
+                if bad_vinyl_tag in flac_comment[fixem][0]:
+                    flac_comment[fixem][0] = flac_comment[fixem][0].replace(bad_vinyl_tag,vinyl_rip)
+                    logging.debug(f'Fix {fixem} typo.')
+                    changed = True
+
+    with ignored(KeyError, IndexError):
         if 'NAD' in flac_comment['COMMENTS'][0]:
             if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
                 flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
                 logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
                 changed = True
+            if vinyl_rip in flac_comment['ALBUM'][0]:
+                if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
+                    flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
+                    logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
+                    changed = True
 
     # dump redundant or problematic tags
     for redundant in ('REPLAYGAIN_ALBUM_GAIN',
@@ -221,9 +249,14 @@ def fix_flac_tags(filename,
         logging.debug('Adding COMMENT Tag')
         changed = True
     else:
-        if "\n" in flac_comment['COMMENT']:
-            logging.debug('Fix multi-line COMMENT Tag')
-            changed = True
+        with ignored(KeyError, IndexError):
+            for junker in ('Saracon', 'PS3', 'AccurateRip'):
+                if junker in flac_comment['COMMENT'][0]:
+                    logging.debug(f'Fix multi-line COMMENT Tag - {junker}')
+                    flac_comment.pop('COMMENT', None)
+                    flac_comment['COMMENT'].append(f'FixFlac {today}')
+                    changed = True
+
 
     for fix_tag in ('DATE', 'YEAR'):
         if fix_tag in flac_comment:
@@ -246,7 +279,7 @@ def fix_flac_tags(filename,
             if len(v) > 1:
                 v = list(set(v))
             for vv in v:
-                if "\n" in vv:
+                if (("\n" in vv)or("\r" in vv)):
                     vv = vv.replace('\r\n', ' ')
                     vv = vv.replace('\n', ' ')
                     vv = vv.replace('\r', ' ')
@@ -255,6 +288,12 @@ def fix_flac_tags(filename,
         print(text)
 
         if tf.exists():
+
+            if ID3_tags:
+                cmd = f'id3v2 --delete-all "{filename}"'
+                print(cmd)
+                run_command(cmd, 1)
+
             # metaflac command line
             cmd = 'metaflac --preserve-modtime --no-utf8-convert'
             cmd += ' --remove-all-tags'

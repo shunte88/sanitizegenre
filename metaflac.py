@@ -10,6 +10,17 @@ from collections import defaultdict
 # All numbers are unsigned unless otherwise specified.
 
 
+class MetaFlacException(Exception):
+    pass
+
+
+def _read(file, nbytes):  # helper function to check if we haven't reached EOF
+    b = file.read(nbytes)
+    if len(b) < nbytes:
+        raise MetaFlacException('Unexpected end of file')
+    return b
+
+
 class MetaFlac:
 
     def __init__(self, filename, genres=None):
@@ -19,12 +30,14 @@ class MetaFlac:
         self.__block_vorbis_comment = None
         self.__block_cuesheet = None
         self.__block_picture = None
+        self.__ID3_tags = False
 
         self.genres = genres
         self.filename = filename
 
         with io.open(filename, 'rb') as file:
-            self.__parse_marker(file.read(4))
+
+            self.__parse_marker(file)
 
             last = 0
             while not last:
@@ -58,10 +71,25 @@ class MetaFlac:
                 else:
                     raise NotImplementedError('invalid, to avoid confusion with a frame sync code')
 
-    def __parse_marker(self, block):
+    def __parse_marker(self, file):
+        # check for ID3 - rare but annoying
+        block = file.read(3)
+        if block == b'ID3':
+            self.__ID3_tags = True
+            # jump the ID3 tag if it exists
+            file.seek(0)  # reset
+            header = struct.unpack('3sBBB4B', _read(file, 10))
+            size = self._calc_size(header[4:8], 7)
+            end_pos = file.tell() + size
+            file.seek(end_pos, os.SEEK_SET)  # skip ID3 tags - ??? good tag data ???
+            block = file.read(4)  # after ID3 we should be on fLaC
+        else:
+            file.seek(0)
+            block = file.read(4)
+
         # "fLaC", the FLAC stream marker in ASCII
         if block != b'fLaC':
-            raise Exception('%s is not valid flac header on %s' % (block, self.filename))
+            raise MetaFlacException(f'{block} is not valid flac header on {self.filename}')
 
     def __parse_block_header(self, block):
         unpacked = struct.unpack('>I', block)[0]
@@ -207,4 +235,8 @@ class MetaFlac:
                             vorbis_comment[key].append(value)
                 else:
                     vorbis_comment[key].append(value)
-        return vorbis_comment, expanded
+        return vorbis_comment, expanded, self.__ID3_tags
+
+    def _calc_size(self, bytestr, bits_per_byte):
+        # length of some mp3 header fields is described by 7 or 8-bit-bytes
+        return reduce(lambda accu, elem: (accu << bits_per_byte) + elem, bytestr, 0)
