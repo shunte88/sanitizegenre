@@ -85,6 +85,8 @@ def fix_flac_tags(filename,
                 regex = None
                 if '/' in flac_comment['TITLE'][0]:
                     regex = r'^(.*)/(.*)$'
+                elif '_' in flac_comment['TITLE'][0]:
+                    regex = r'^(.*)_(.*)$'
                 elif '-' in flac_comment['TITLE'][0]:
                     regex = r'^(.*)-(.*)$'
                 if regex:
@@ -109,6 +111,8 @@ def fix_flac_tags(filename,
                 regex = None
                 if '/' in flac_comment['TITLE'][0]:
                     regex = r'^(.*)/(.*)$'
+                elif '_' in flac_comment['TITLE'][0]:
+                    regex = r'^(.*)_(.*)$'
                 elif '-' in flac_comment['TITLE'][0]:
                     regex = r'^(.*)-(.*)$'
                 if regex:
@@ -134,6 +138,8 @@ def fix_flac_tags(filename,
                 artist = re.escape(flac_comment['ARTIST'][0])
                 if '/' in flac_comment['TITLE'][0]:
                     regex = f'{artist}.*/(.*)$'
+                elif '_' in flac_comment['TITLE'][0]:
+                    regex = f'{artist}.*_(.*)$'
                 elif '-' in flac_comment['TITLE'][0]:
                     regex = f'{artist}.*-(.*)$'
                 if regex:
@@ -223,12 +229,44 @@ def fix_flac_tags(filename,
             if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
                 flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
                 logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
+                flac_comment.pop('COMMENTS', None)
                 changed = True
-            if vinyl_rip in flac_comment['ALBUM'][0]:
-                if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
-                    flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
-                    logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
-                    changed = True
+        if 'NAD' in flac_comment['COMMENT'][0]:
+            if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
+                flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
+                logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
+                changed = True
+        if vinyl_rip in flac_comment['ALBUM'][0]:
+            if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
+                flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
+                logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
+                changed = True
+        if 'inyl' in flac_comment['COMMENT'][0] or 'Digitally' in flac_comment['COMMENT'][0]:
+            if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
+                flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
+                logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
+                changed = True
+            flac_comment.pop('COMMENT', None)
+            changed = True
+        if 'inyl' in flac_comment['COMMENTS'][0] or 'Digitally' in flac_comment['COMMENTS'][0]:
+            if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
+                flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
+                logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
+                changed = True
+            flac_comment.pop('COMMENTS', None)
+            changed = True
+
+    with ignored(KeyError, IndexError):
+        if 'inyl' in flac_comment['COMMENTS'][0] or \
+        'Digitally' in flac_comment['COMMENTS'][0] or \
+        'inyl' in flac_comment['COMMENT'][0] or \
+        'Digitally' in flac_comment['COMMENT'][0]:
+            if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
+                flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
+                logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
+                changed = True
+            flac_comment.pop('COMMENTS', None)
+            changed = True
 
     # dump redundant or problematic tags
     for redundant in ('REPLAYGAIN_ALBUM_GAIN',
@@ -250,8 +288,9 @@ def fix_flac_tags(filename,
         changed = True
     else:
         with ignored(KeyError, IndexError):
-            for junker in ('Saracon', 'PS3', 'AccurateRip'):
+            for junker in ('Saracon', 'PS3', 'AccurateRip', 'Tagged By', 'Beers', 'Digitally', 'Vinyl'):
                 if junker in flac_comment['COMMENT'][0]:
+                    print(f"---------------> {flac_comment['COMMENT'][0]}")
                     logging.debug(f'Fix multi-line COMMENT Tag - {junker}')
                     flac_comment.pop('COMMENT', None)
                     flac_comment['COMMENT'].append(f'FixFlac {today}')
