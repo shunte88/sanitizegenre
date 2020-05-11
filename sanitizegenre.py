@@ -85,6 +85,8 @@ def fix_flac_tags(filename,
                 regex = None
                 if '/' in flac_comment['TITLE'][0]:
                     regex = r'^(.*)/(.*)$'
+                elif ':' in flac_comment['TITLE'][0]:
+                    regex = r'^(.*):(.*)$'
                 elif '_' in flac_comment['TITLE'][0]:
                     regex = r'^(.*)_(.*)$'
                 elif '-' in flac_comment['TITLE'][0]:
@@ -157,6 +159,12 @@ def fix_flac_tags(filename,
 
     if 'PERFORMER' not in flac_comment:
         if 'ARTIST' in flac_comment:
+            flac_comment['PERFORMER'].append(flac_comment['ARTIST'][0])
+            logging.debug('Adding PERFORMER Tag')
+            changed = True
+    elif "" == flac_comment['PERFORMER'][0].strip():
+        if 'ARTIST' in flac_comment:
+            flac_comment.pop('PERFORMER', None)
             flac_comment['PERFORMER'].append(flac_comment['ARTIST'][0])
             logging.debug('Adding PERFORMER Tag')
             changed = True

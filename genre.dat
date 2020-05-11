@@ -3,6 +3,8 @@
 # for coverage a full list is developed here
 # for safety values pass-thru if not defined here
 Non-music|Non-music
+Radioplay|Radioplay
+Experimerntal|Experimental
 AcousticElectronic|Acoustic;Electronic
 Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychede|Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychedelic Rock
 Psychede|Psychedelic Rock
@@ -135,6 +137,7 @@ Berlin-School|Electronic;Berlin School;Krautrock
 Berlin-school|Electronic;Berlin School;Krautrock
 Berlin School|Electronic;Berlin School;Krautrock
 Bhangra|Bhangra;Dance
+Musique Concrète|Musique Concrète
 Big Band|Big Band;Jazz
 Big Beat|Electronic;Big Beat
 Big BEat|Electronic;Big Beat
