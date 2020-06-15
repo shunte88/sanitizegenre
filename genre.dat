@@ -2,6 +2,18 @@
 # we should only need to include the exceptions, but
 # for coverage a full list is developed here
 # for safety values pass-thru if not defined here
+Industrial:Wave|Industrial;Wave
+Electroacoustic|Electroacoustic
+Field Recordings|Field Recording
+Electronic'Ambient|Electronic;Ambient
+Electyronic|Electronic
+Industriasl|Industrial
+Hard Techno|Hard Techno
+Classical, Romantic|Classical, Romantic
+Rock Blues|Rock Blues
+Americana|Americana
+Folk, World, And Country|Folk, World, & Country
+Lo-FiNoise|Lo-Fi;Noise
 Non-music|Non-music
 Radioplay|Radioplay
 Experimerntal|Experimental

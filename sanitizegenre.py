@@ -233,12 +233,14 @@ def fix_flac_tags(filename,
                     changed = True
 
     with ignored(KeyError, IndexError):
-        if 'NAD' in flac_comment['COMMENTS'][0]:
-            if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
-                flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
-                logging.debug('Add REPLAYGAIN_TRACK_GAIN Tag')
-                flac_comment.pop('COMMENTS', None)
-                changed = True
+        if 'FFZ' in flac_comment['COMMENTS'][0]:
+            logging.debug('Default COMMENT Tag')
+            flac_comment.pop('COMMENTS', None)
+            changed = True
+        if 'FFZ' in flac_comment['COMMENT'][0]:
+            logging.debug('Default COMMENT Tag')
+            flac_comment.pop('COMMENT', None)
+            changed = True
         if 'NAD' in flac_comment['COMMENT'][0]:
             if 'REPLAYGAIN_TRACK_GAIN' not in flac_comment:
                 flac_comment['REPLAYGAIN_TRACK_GAIN'].append(replay_gain)
