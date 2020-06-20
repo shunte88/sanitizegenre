@@ -2,6 +2,8 @@
 # we should only need to include the exceptions, but
 # for coverage a full list is developed here
 # for safety values pass-thru if not defined here
+#
+Dark Ambientl|Dark Ambient
 Industrial:Wave|Industrial;Wave
 Electroacoustic|Electroacoustic
 Field Recordings|Field Recording

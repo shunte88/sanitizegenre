@@ -169,6 +169,16 @@ def fix_flac_tags(filename,
             logging.debug('Adding PERFORMER Tag')
             changed = True
 
+    if 'CATALOGNUMBER' not in flac_comment:
+        regex = r'\[([^\[]*)\][^\[]*$'
+        unpack = re.split(regex,
+                          flac_comment['ALBUM'][0],
+                          maxsplit=1)
+        if unpack:
+            flac_comment['CATALOGNUMBER'].append(unpack[1].strip())
+            logging.debug('Adding CATALOGNUMBER Tag')
+            changed = True
+
     # fix disktotal, disknumber tag typo
 
     for test_tag in ('DISKNUMBER', 'DISKTOTAL'):
