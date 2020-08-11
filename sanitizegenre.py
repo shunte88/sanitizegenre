@@ -170,14 +170,15 @@ def fix_flac_tags(filename,
             changed = True
 
     if 'CATALOGNUMBER' not in flac_comment:
-        regex = r'\[([^\[]*)\][^\[]*$'
-        unpack = re.split(regex,
-                          flac_comment['ALBUM'][0],
-                          maxsplit=1)
-        if unpack:
-            flac_comment['CATALOGNUMBER'].append(unpack[1].strip())
-            logging.debug('Adding CATALOGNUMBER Tag')
-            changed = True
+        if '[' in flac_comment['ALBUM'][0]:
+            regex = r'\[([^\[]*)\][^\[]*$'
+            unpack = re.split(regex,
+                              flac_comment['ALBUM'][0],
+                              maxsplit=1)
+            if unpack:
+                flac_comment['CATALOGNUMBER'].append(unpack[1].strip())
+                logging.debug('Adding CATALOGNUMBER Tag')
+                changed = True
 
     # fix disktotal, disknumber tag typo
 
@@ -243,11 +244,11 @@ def fix_flac_tags(filename,
                     changed = True
 
     with ignored(KeyError, IndexError):
-        if 'FFZ' in flac_comment['COMMENTS'][0]:
+        if 'ffz' in flac_comment['COMMENTS'][0] or 'FFZ' in flac_comment['COMMENTS'][0]:
             logging.debug('Default COMMENT Tag')
             flac_comment.pop('COMMENTS', None)
             changed = True
-        if 'FFZ' in flac_comment['COMMENT'][0]:
+        if 'ffz' in flac_comment['COMMENT'][0] or 'FFZ' in flac_comment['COMMENT'][0]:
             logging.debug('Default COMMENT Tag')
             flac_comment.pop('COMMENT', None)
             changed = True
