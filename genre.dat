@@ -5,19 +5,25 @@
 #
 #
 
+Afro|Afro
+Religious|Religious
+lectronic|Electronic
+E|Electronic
 No Wave|No Wave
-Electronic, |Electronic;
-Electronica, |Electronica;
-Downtempo, |Downtempo;
-Classical, |Classical;
-Ambient, |Ambient;
-Experimental, |Experimental;
-Modern Classical, |Modern Classical;
+Electronic, |Electronic
+Electronica, |Electronica
+Downtempo, |Downtempo
+Classical, |Classical
+Ambient, |Ambient
+Experimental, |Experimental
+Modern Classical, |Modern Classical
 Generative Synthesis|Generative Synthesis
 ndustrial|Industrial
 Electric|Electronic
 Glitch, Breaks|Glitch;Breaks
-Electro-acoustic|Electro-acoustic
+Electroacoustic|Electroacoustic
+Electro-acoustic|Electroacoustic
+AcousticElectronic|Acoustic;Electronic;Electroacoustic
 Deep Dance|Deep Dance
 Home Recording|Home Recording
 Lockdown|Lockdown
@@ -31,7 +37,6 @@ Roots Regga|Roots Reggae
 Political|Political
 Dark Ambientl|Dark Ambient
 Industrial:Wave|Industrial;Wave
-Electroacoustic|Electroacoustic
 Field Recordings|Field Recording
 Electronic'Ambient|Electronic;Ambient
 Electyronic|Electronic
@@ -45,7 +50,6 @@ Lo-FiNoise|Lo-Fi;Noise
 Non-music|Non-music
 Radioplay|Radioplay
 Experimerntal|Experimental
-AcousticElectronic|Acoustic;Electronic
 Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychede|Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychedelic Rock
 Psychede|Psychedelic Rock
 Avant-Funk|Avant-Funk
