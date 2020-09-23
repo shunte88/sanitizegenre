@@ -47,6 +47,7 @@ def fix_flac_tags(filename,
     changed = False
     vinyl_rip = '24bVR'
     bad_vinyl_tag = '24Vbr'
+    folder_sig = '/hdd/scratch/'
 
     today = datetime.date.today()
     metflac = None
@@ -242,6 +243,17 @@ def fix_flac_tags(filename,
                     flac_comment[fixem][0] = flac_comment[fixem][0].replace(bad_vinyl_tag,vinyl_rip)
                     logging.debug(f'Fix {fixem} typo.')
                     changed = True
+                if folder_sig in flac_comment[fixem][0]:
+                    regex = r'([^/]+?)$'
+                    print(f'{flac_comment[fixem][0]}')
+                    unpack = re.split(regex,
+                              flac_comment[fixem][0],
+                              maxsplit=1)
+                    print(f'0:{unpack[0]} or 1:{unpack[1]}')
+                    if unpack:
+                        flac_comment[fixem][0] = unpack[1].strip()
+                        logging.debug(f'Fix {fixem} typo.')
+                        changed = True
 
     with ignored(KeyError, IndexError):
         if 'ffz' in flac_comment['COMMENTS'][0] or 'FFZ' in flac_comment['COMMENTS'][0]:
@@ -295,6 +307,10 @@ def fix_flac_tags(filename,
                       'REPLAYGAIN_TRACK_PEAK',
                       'UNSYNCEDLYRICS',
                       'CONTACT',
+                      'RETAILDATE',
+                      'ENCODED',
+                      'ENCODER',
+                      'ENCODED BY',
                       'LOCATION',
                       'GROUPING'):
         if redundant in flac_comment:
