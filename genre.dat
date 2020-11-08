@@ -4,6 +4,17 @@
 # for safety values pass-thru if not defined here
 #
 #
+Popo|Pop
+Reggae Pop|Reggae;Pop;Reggae-Pop
+Reggae-Pop|Reggae;Pop;Reggae-Pop
+House, Techno, Tech House|Electronic;House;Techno;Tech House
+Indue|Indie
+ClassicRock|Classic Rock
+Rock;Pop;Glam Rock;ClassicRock|Rock;Pop;Glam Rock;Classic Rock
+Pop Rock"Pop'Rock|Pop Rock;Pop;Rock
+Boogaloo|Boogaloo
+Latin Jazz|Latin Jazz
+Salsa|Salsa
 Bleep|Bleep
 Horror|Horror
 Hauntology|Hauntology

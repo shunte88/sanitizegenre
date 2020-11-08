@@ -163,7 +163,7 @@ def fix_flac_tags(filename,
             flac_comment['PERFORMER'].append(flac_comment['ARTIST'][0])
             logging.debug('Adding PERFORMER Tag')
             changed = True
-    elif "" == flac_comment['PERFORMER'][0].strip():
+    elif "" == flac_comment['PERFORMER'][0].strip() or "Various Artists" == flac_comment['PERFORMER'][0].strip():
         if 'ARTIST' in flac_comment:
             flac_comment.pop('PERFORMER', None)
             flac_comment['PERFORMER'].append(flac_comment['ARTIST'][0])
@@ -256,9 +256,17 @@ def fix_flac_tags(filename,
                         changed = True
 
     with ignored(KeyError, IndexError):
+        if 'fzz' in flac_comment['COMMENTS'][0] or 'FZZ' in flac_comment['COMMENTS'][0]:
+            logging.debug('Default COMMENT Tag')
+            flac_comment.pop('COMMENTS', None)
+            changed = True
         if 'ffz' in flac_comment['COMMENTS'][0] or 'FFZ' in flac_comment['COMMENTS'][0]:
             logging.debug('Default COMMENT Tag')
             flac_comment.pop('COMMENTS', None)
+            changed = True
+        if 'fzz' in flac_comment['COMMENT'][0] or 'FZZ' in flac_comment['COMMENT'][0]:
+            logging.debug('Default COMMENT Tag')
+            flac_comment.pop('COMMENT', None)
             changed = True
         if 'ffz' in flac_comment['COMMENT'][0] or 'FFZ' in flac_comment['COMMENT'][0]:
             logging.debug('Default COMMENT Tag')
