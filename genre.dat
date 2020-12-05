@@ -4,6 +4,13 @@
 # for safety values pass-thru if not defined here
 #
 #
+EAX|Electronic;Ambient;Experimental
+HeavyRock|Heavy Rock;Rock
+HardRock|Hard Rock;Rock
+Alternative & Indie|Alternative & Indie;Alternative;Indie
+World Beat|World Beat
+African|African
+BluesRock|Blues Rock;Rock
 Rebetiko|Rebetiko
 Post-Metal|Post-Metal
 Glitch Dub|Dub;Glitch;Glitch Dub
@@ -16,7 +23,7 @@ Reggae Pop|Reggae;Pop;Reggae-Pop
 Reggae-Pop|Reggae;Pop;Reggae-Pop
 House, Techno, Tech House|Electronic;House;Techno;Tech House
 Indue|Indie
-ClassicRock|Classic Rock
+ClassicRock|Classic Rock;Rock
 Rock;Pop;Glam Rock;ClassicRock|Rock;Pop;Glam Rock;Classic Rock
 Pop Rock"Pop'Rock|Pop Rock;Pop;Rock
 Boogaloo|Boogaloo
@@ -44,6 +51,8 @@ D|Dub
 R|Reggae
 H|House
 T|Techno
+Ro|Rock
+H|House
 No Wave|No Wave
 Electronic, |Electronic
 Electronica, |Electronica
