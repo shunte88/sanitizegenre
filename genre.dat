@@ -4,6 +4,7 @@
 # for safety values pass-thru if not defined here
 #
 #
+Modern Classsical|Modern Classical;Contemporary;Classical
 Freakbeat|Freakbeat;Mod
 Traditional|Traditional
 I|Industrial
@@ -64,7 +65,7 @@ Downtempo, |Downtempo
 Classical, |Classical
 Ambient, |Ambient
 Experimental, |Experimental
-Modern Classical, |Modern Classical
+Modern Classical, |Modern Classical;Contemporary;Classical
 Generative Synthesis|Generative Synthesis
 ndustrial|Industrial
 Electric|Electronic
@@ -101,7 +102,7 @@ Experimerntal|Experimental
 Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychede|Electronic;Rock;Krautrock;Experimental Rock;Avant-Funk;Psychedelic Rock
 Psychede|Psychedelic Rock
 Avant-Funk|Avant-Funk
-Folk Rock:Modern Classical|Folk Rock;Modern Classical
+Folk Rock:Modern Classical|Folk Rock;Modern Classical;Contemporary;Classical
 lpop|Pop
 lPop|Pop
 LPop|Pop
@@ -167,7 +168,7 @@ AlternRock|Alt. Rock;Alternative
 Alterntive Rock|Alt. Rock;Alternative
 Ambient|Ambient
 Ambient/ambient|Ambient
-Ambient : Classical|Ambient;Modern Classical;Classical
+Ambient : Classical|Ambient;Modern Classical;Classical;Contemporary
 Ambient Dub|Ambient;Dub
 Ambient\|Electronic;Ambient
 Ambient\; Electronic|Electronic;Ambient
