@@ -4,13 +4,27 @@
 # for safety values pass-thru if not defined here
 #
 #
-Modern Classsical|Modern Classical;Contemporary;Classical
-Freakbeat|Freakbeat;Mod
-Traditional|Traditional
+E|Electronic
+Ac|Acid
+Am|Ambient
+Ab|Abstract
+X|Experimental
+Ex|Experimental
+D|Dub
+R|Reggae
+H|House
+T|Techno
+Ro|Rock
+H|House
 I|Industrial
 DH|Deep House;House
 EAT|Electronic;Ambient;Techno
 EAX|Electronic;Ambient;Experimental
+Cape Jazz|Cape Jazz;Jazz
+Synthpo|Synthpop
+Modern Classsical|Modern Classical;Contemporary;Classical
+Freakbeat|Freakbeat;Mod
+Traditional|Traditional
 HeavyRock|Heavy Rock;Rock
 HardRock|Hard Rock;Rock
 Alternative & Indie|Alternative & Indie;Alternative;Indie
@@ -48,17 +62,6 @@ Jazz/Funk|Jazz/Funk
 Afro|Afro
 Religious|Religious
 lectronic|Electronic
-E|Electronic
-Am|Ambient
-Ab|Abstract
-X|Experimental
-Ex|Experimental
-D|Dub
-R|Reggae
-H|House
-T|Techno
-Ro|Rock
-H|House
 No Wave|No Wave
 Electronic, |Electronic
 Electronica, |Electronica
