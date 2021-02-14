@@ -4,6 +4,12 @@
 # for safety values pass-thru if not defined here
 #
 #
+Southern Rock|Southern Rock;Rock
+IndieRock|Indie Rock;Indie
+HH|Hip-Hop;Hip Hop
+J|Jazz
+CJ|Contemporary Jazz
+Ju|Jungle
 E|Electronic
 Ac|Acid
 Am|Ambient
@@ -16,6 +22,7 @@ H|House
 T|Techno
 Ro|Rock
 H|House
+HR|Heavy Rock;Rock
 I|Industrial
 DH|Deep House;House
 EAT|Electronic;Ambient;Techno
