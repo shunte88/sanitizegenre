@@ -71,6 +71,12 @@ def fix_flac_tags(filename,
                 (int('Y' == flac_comment['COMPILATION'][0])) or \
                 (int('1' == flac_comment['COMPILATION'][0])))
 
+    for idx, artist in enumerate(flac_comment['ARTIST']):
+        if 'none'==artist.lower():
+            flac_comment['ARTIST'].remove('None')
+            logging.debug('Cleanup ARTIST Tag')
+            changed = True
+
     for test_tag in ('ALBUMARTIST', 'ALBUM ARTIST'):
         if test_tag in flac_comment:
             if 'Various' in flac_comment[test_tag][0] or 1 == isvarious:
@@ -157,6 +163,11 @@ def fix_flac_tags(filename,
     except Exception:
         pass
 
+    if 'ARTIST' in flac_comment:
+        if 'None' in flac_comment['ARTIST']:
+            flac_comment['ARTIST'].remove('None')
+            logging.debug(f'Cleanup discogstagger cruft')
+            changed = True
 
     if 'PERFORMER' not in flac_comment:
         if 'ARTIST' in flac_comment:
@@ -367,7 +378,9 @@ def fix_flac_tags(filename,
                     vv = vv.replace('\r\n', ' ')
                     vv = vv.replace('\n', ' ')
                     vv = vv.replace('\r', ' ')
-                text += f"{k}={vv}\n"
+                if vv!='None' and vv!='Not On Label':
+                    if vv:
+                        text += f"{k}={vv}\n"
         tf.write_text(text)
         print(text)
 

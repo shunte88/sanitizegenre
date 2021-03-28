@@ -4,6 +4,7 @@
 # for safety values pass-thru if not defined here
 #
 #
+
 Mn|Minimal
 DT|Dub Techno
 Gamelan|Gamelan
@@ -11,6 +12,8 @@ UH|Euro House
 In|Industrial
 IR|Indie Rock
 Dn|Downtempo
+Folk Pop|Folk Pop;Folk;Pop
+Avant-Pop|Avant-Pop;Pop
 Downtemp|Downtempo
 Southern Rock|Southern Rock;Rock
 IndieRock|Indie Rock;Indie
@@ -35,6 +38,14 @@ I|Industrial
 DH|Deep House;House
 EAT|Electronic;Ambient;Techno
 EAX|Electronic;Ambient;Experimental
+Reggaeton|Reggaeton
+J-pop|J-pop
+J-Pop|J-pop
+JPop|J-pop
+Jpop|J-pop
+JP|J-pop
+Ragtime|Ragtime
+Neo Soul|Neo Soul
 Cape Jazz|Cape Jazz;Jazz
 Synthpo|Synthpop
 Modern Classsical|Modern Classical;Contemporary;Classical
